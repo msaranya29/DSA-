@@ -78,12 +78,49 @@ public class ReverseLL {
         return;
             
     }
+    public Node findMid(Node head){
+        Node slow=head;
+        Node fast=head;
+        while(fast!=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow; 
+    
+    }
 
+    public boolean isPalindrome() {
+        if(head==null || head.next==null){
+            return true;
+        }
+        // Find the middle of the linked list
+        Node mid = findMid(head);
+        // Reverse the second half of the linked list
+        Node prev = null;
+        Node current = mid;
+        Node next;
+        while (current != null) {
+            next = current.next; // Store next node
+            current.next = prev; // Reverse the link
+            prev = current; // Move prev to current
+            current = next; // Move to next node
+        }
+        Node right= prev; // This is the head of the reversed second half
+        Node left = head; // This is the head of the first half
+        while (right != null) {
+            if (left.data != right.data) {
+                return false; // Not a palindrome
+            }
+            left = left.next;
+            right = right.next; 
+        }
+        return true; 
+    }
     public static void main(String[] args) {
-        ReverseLL ll = new ReverseLL(); 
-        ll.addFirst(2);
-        ll.addFirst(1);
-        ll.addLast(3);
+        /*ReverseLL ll = new ReverseLL(); 
+        //ll.addFirst(2);
+        //ll.addFirst(1);
+        //ll.addLast(3);
         ll.addLast(4);
         ll.printList();
         //ll.add(2, 9);
@@ -93,5 +130,15 @@ public class ReverseLL {
         ll.deleteNthFromEnd(2);
         System.out.println("After deleting 2nd node from end:");
         ll.printList();
+        System.out.println();*/
+                
+        ReverseLL ll2 = new ReverseLL();
+    ll2.addFirst(1);
+    ll2.addLast(2);
+    ll2.addLast(2);
+    ll2.addLast(1);
+    System.out.println("Linked List:");
+    ll2.printList(); 
+    System.out.println("Is Palindrome? " + ll2.isPalindrome()); // Should return true
     }
 }

@@ -127,6 +127,7 @@ public class ReverseLL {
                 return true; // Cycle detected
             }
         }
+        return false; 
     }
     public static void main(String[] args) {
         /*ReverseLL ll = new ReverseLL(); 

@@ -3,38 +3,49 @@ public class Queue_Array {
         int arr[];
         int size;
         int rear;
+        int front;
 
         Queue(int n) {
             arr = new int[n];
             size = n;
             rear = -1;
+            front = -1;
         }
 
         public boolean isEmpty() {
-            return rear == -1;
+            return rear == -1 && front == -1;
         }
 
-        public void add(int data) {
-            if (rear == size - 1) {
+        public boolean isFull() {
+            return (rear + 1) % size == front;
+        }
+
+        public void add(int data) { // O(1)
+            if (isFull()) {
                 System.out.println("Queue is full");
                 return;
             }
-            rear = rear + 1;
+            if (front == -1) {
+                front = 0;
+            }
+            rear = (rear + 1) % size;
             arr[rear] = data;
         }
 
-        public int remove() {
+        public int remove() { // O(1)
             if (isEmpty()) {
                 System.out.println("Queue is empty");
                 return -1;
             }
-            int front = arr[0];
-            // shift elements left
-            for (int i = 0; i < rear; i++) {
-                arr[i] = arr[i + 1];
+            int result = arr[front];
+            if (rear == front) {
+                // only one element left
+                rear = -1;
+                front = -1;
+            } else {
+                front = (front + 1) % size;
             }
-            rear--;
-            return front;
+            return result;
         }
 
         public int peek() {
@@ -42,7 +53,7 @@ public class Queue_Array {
                 System.out.println("Queue is empty");
                 return -1;
             }
-            return arr[0];
+            return arr[front];
         }
     }
 
